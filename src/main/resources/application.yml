@@ -1,9 +1,17 @@
+server:
+  port: 9292
 spring:
+  profiles:
+    active: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
   data:
     mongodb:
       database: ProductsDB
       host: localhost
       port: 27017
 
-server:
-  port: 9292

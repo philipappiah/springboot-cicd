@@ -7,13 +7,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "product")
+@AllArgsConstructor
+@Document
 public class Product {
     @Id
     private String id;
     private String name;
-    private int qty;
-    private double price;
+    private Integer qty;
+    private Double price;
 }

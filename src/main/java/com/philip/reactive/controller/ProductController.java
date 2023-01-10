@@ -1,7 +1,7 @@
 package com.philip.reactive.controller;
 
 
-import com.philip.reactive.dto.ProductDto;
+import com.philip.reactive.entity.Product;
 import com.philip.reactive.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,37 +14,37 @@ public class ProductController {
 
 
     @Autowired
-    private ProductService service;
+    private ProductService productService;
 
     @GetMapping
-    public Flux<ProductDto> getProducts(){
-        return service.getProducts();
+    public Flux<Product> getProducts(){
+        return productService.getProducts();
     }
 
     @GetMapping("/{id}")
-    public Mono<ProductDto> getProduct(@PathVariable String id){
-      return service.getProduct(id);
+    public Mono<Product> getProduct(@PathVariable String id){
+      return productService.getProduct(id);
     }
 
     @GetMapping("/product-range")
-    public Flux<ProductDto> getProductBetweenRange(@RequestParam("min") double min,@RequestParam("max") double max){
-    return service.getProductInRange(min, max);
+    public Flux<Product> getProductBetweenRange(@RequestParam("min") double min,@RequestParam("max") double max){
+    return productService.getProductInRange(min, max);
     }
 
     @PostMapping
-    public Mono<ProductDto> saveProduct(@RequestBody ProductDto productDtoMono){
-        return service.saveProduct(productDtoMono);
+    public Mono<Product> saveProduct(@RequestBody Product product){
+        return productService.saveProduct(product);
     }
 
-    @PutMapping("/update/{id}")
-    public Mono<ProductDto> saveProduct(@RequestBody ProductDto productDtoMono, @PathVariable String id ){
+    @PutMapping("/{id}")
+    public Mono<Product> saveProduct(@RequestBody Product product, @PathVariable String id ){
 
 
-        return service.updateProduct(productDtoMono, id);
+        return productService.updateProduct(product, id);
     }
 
     @DeleteMapping("/delete/{id}")
     public Mono<Void> deleteProduct(@PathVariable String id){
-        return service.deleteProduct(id);
+        return productService.deleteProduct(id);
     }
 }

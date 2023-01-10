@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductDto {
     private String id;
+
     private String name;
-    private int qty;
-    private double price;
+    private Integer qty;
+    private Double price;
 
 }

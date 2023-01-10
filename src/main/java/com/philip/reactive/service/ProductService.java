@@ -1,13 +1,13 @@
 package com.philip.reactive.service;
 
 
-import com.philip.reactive.dto.ProductDto;
+
 import com.philip.reactive.entity.Product;
 import com.philip.reactive.repository.ProductRepository;
 import com.philip.reactive.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Range;
-import org.springframework.stereotype.Repository;
+
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -19,39 +19,37 @@ public class ProductService {
     private ProductRepository repository;
 
 
-    public Flux<ProductDto> getProducts(){
-        return repository.findAll().map(AppUtils::entityDto);
+    public Flux<Product> getProducts(){
+        return repository.findAll();
     }
 
-    public Mono<ProductDto> getProduct(String id){
-        return  repository.findById(id).map(AppUtils::entityDto);
+    public Mono<Product> getProduct(String id){
+        return  repository.findById(id);
     }
 
 
-    public Flux<ProductDto> getProductInRange(double min, double max){
+    public Flux<Product> getProductInRange(double min, double max){
         return repository.findByPriceBetween(Range.closed(min, max));
     }
 
-    public Mono<ProductDto> saveProduct(ProductDto productDtoMono){
-        return repository.save(AppUtils.DtoEntity(productDtoMono)).map(AppUtils::entityDto);
+    public Mono<Product> saveProduct(Product product){
+        return repository.save(product);
                 //productDtoMono.map(AppUtils::DtoEntity).flatMap(repository::insert).map(AppUtils::entityDto);
     }
 
-    public Mono<ProductDto> updateProduct(ProductDto productDto,String id){
-
+    public Mono<Product> updateProduct(Product productDto,String id){
 
 
         return repository.findById(id)
                 .map(e -> {
                     e.setId(id);
-                    if(productDto.getPrice() > 0) e.setPrice(productDto.getPrice());
+                    if(productDto.getPrice() != null) e.setPrice(productDto.getPrice());
                     if(productDto.getName() != null) e.setName(productDto.getName());
-                    if(productDto.getQty() > 0) e.setQty(productDto.getQty());
+                    if(productDto.getQty() != null) e.setQty(productDto.getQty());
                     return e ;
 
                 })
-                .flatMap(repository::save)
-                .map(AppUtils::entityDto);
+                .flatMap(repository::save);
     }
 
     public Mono<Void> deleteProduct(String id){
