@@ -11,7 +11,7 @@
 	<groupId>com.philip</groupId>
 	<artifactId>spring-reactive-mongo-crud</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>spring-reactive-mongo-crud</name>
 	<description>Springboot Reactive Mongo CRUD</description>
 	<properties>
